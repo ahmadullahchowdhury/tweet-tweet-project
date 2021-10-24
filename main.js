@@ -46,7 +46,7 @@ function loadEventListener() {
   window.addEventListener('DOMContentLoaded', getData.bind(null, productData))
   form.addEventListener('click', addOrUpdateProduct)
 
-  filterInput.addEventListener('keyup', filterProduct)
+  filterInput.addEventListener('keydown', filterProduct)
 }
 //Getting data from store and populate UI
 function getData(productList) {
@@ -145,7 +145,6 @@ const addItem = e => {
   //const time = getHour + ':' + getMinutes
   //console.logt(time)
   let newDate = new Date();
-
   let time =  newDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 
   //const price = priceInput.value
@@ -157,7 +156,7 @@ const addItem = e => {
   }
   if ( name === '' || name.length > 250)
    {
-    alert('Please fill up valid information')
+    alert('Please enter 0-250 words')
   } else {
     const data = {
       id,
@@ -216,7 +215,8 @@ const modifyOrRemoveProduct = e => {
       return productItem.id !== id
     })
     productData = result
-    deleteItemFromLocalStorage(id)
+    deleteItemFromLocalStorage(id) 
+    location.reload()
    } 
    //else if (e.target.classList.contains('edit-product')) {
     //finding the ID
@@ -237,7 +237,7 @@ const filterProduct = e => {
   const text = e.target.value.toLowerCase()
   let productLength = 0
   document.querySelectorAll('.collection .collection-item').forEach(item => {
-    const productName = item.firstElementChild.textContent.toLowerCase()
+    const productName = item.firstElementChild.nextElementSibling.textContent.toLowerCase()
     if (productName.indexOf(text) === -1) {
       item.style.display = 'none'
     } else {

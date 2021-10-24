@@ -1,4 +1,3 @@
-
 const filterInput = document.querySelector('#filter')
 const productListUL = document.querySelector('.collection')
 const msg = document.querySelector('.msg')
@@ -51,21 +50,27 @@ function loadEventListener() {
 }
 //Getting data from store and populate UI
 function getData(productList) {
+
+  //var newDate = new Date();
+
+  //const newtime =  newDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+
   let count = 1;
   productListUL.innerHTML = ''
   if (productData.length > 0) {
     showMessage()
-    productList.forEach(({ id, name}) => {
-      const currentDate = new Date();
+    productList.forEach(({ id, name, time}) => {
+      
       let li = document.createElement('li')
       li.className = 'list-group-item collection-item'
       li.id = `product-${id}`
-      li.innerHTML = `<span>${count}. </span><strong>${name}</strong><span class="time"> ${currentDate.getHours()}:${currentDate.getUTCMinutes()}</span>
-      <button type="button" class="btn btn-outline-danger btn-sm delete-product">Delete</button>
+      li.innerHTML = `<span>${count}. </span><strong>${name}</strong><span class=" small time">  ${time}</span>
+      <button type="button" class="btn btn-outline-danger btn-sm float-right delete-product">Delete</button>
       `
-      
       //   li.innerHTML.style.color = "green";
       productListUL.appendChild(li)
+      console.log(time)
+      count++
     })
   } else {
     // showMessage(true, null);
@@ -135,6 +140,14 @@ function addOrUpdateProduct(e) {
 
 const addItem = e => {
   const name = nameInput.value
+  const getMinutes = new Date().getMinutes();
+  //const getHour = new Date().getHours();
+  //const time = getHour + ':' + getMinutes
+  //console.logt(time)
+  let newDate = new Date();
+
+  let time =  newDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+
   //const price = priceInput.value
   let id
   if (productData.length === 0) {
@@ -142,7 +155,7 @@ const addItem = e => {
   } else {
     id = productData[productData.length - 1].id + 1
   }
-  if ( name === '')
+  if ( name === '' || name.length > 250)
    {
     alert('Please fill up valid information')
   } else {
@@ -150,6 +163,7 @@ const addItem = e => {
       id,
       name,
       //price
+      time
     }
     //adding data to data store
     productData.push(data)

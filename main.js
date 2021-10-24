@@ -246,6 +246,7 @@ const filterProduct = e => {
     }
   })
   productLength > 0 ? showMessage() : showMessage('No Tweet Found')
+  //location.reload()
 }
 
 loadEventListener()

@@ -51,6 +51,7 @@ function loadEventListener() {
 }
 //Getting data from store and populate UI
 function getData(productList) {
+  let count = 1;
   productListUL.innerHTML = ''
   if (productData.length > 0) {
     showMessage()
@@ -59,7 +60,7 @@ function getData(productList) {
       let li = document.createElement('li')
       li.className = 'list-group-item collection-item'
       li.id = `product-${id}`
-      li.innerHTML = `<strong>${name}</strong><span class="time"> ${currentDate.getHours()}:${currentDate.getUTCMinutes()}</span>
+      li.innerHTML = `<span>${count}. </span><strong>${name}</strong><span class="time"> ${currentDate.getHours()}:${currentDate.getUTCMinutes()}</span>
       <button type="button" class="btn btn-outline-danger btn-sm delete-product">Delete</button>
       `
       
